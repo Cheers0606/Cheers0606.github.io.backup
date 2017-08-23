@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!-- 
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.0 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            hadoop安装手册 | 
+        
+        莫安
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="莫安">
+    <meta name="description" content="心无属，意斑斓">
+    <meta name="keywords" content="null">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="莫安">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://www.moan.ac.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="hadoop安装手册 | 莫安">
+    <meta property="og:description" content="心无属，意斑斓">
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/queue.js"></script>
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#hadoop-完全分布式集群搭建"><span class="post-toc-number">1.</span> <span class="post-toc-text">hadoop 完全分布式集群搭建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装centOS"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">安装centOS</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装java"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">安装java</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建hadoop用户和用户组"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">创建hadoop用户和用户组</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设置网络"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">设置网络</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载，安装并配置hadoop"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">下载，安装并配置hadoop</span></a></li></ol></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 10 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                hadoop安装手册
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>莫安</strong>
+        <span>3月 30, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=hadoop安装手册&url=http://www.moan.ac.cn//2017/03/30/hadoop安装手册/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=hadoop安装手册&url=http://www.moan.ac.cn//2017/03/30/hadoop安装手册/index.html&via=莫安" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://www.moan.ac.cn//2017/03/30/hadoop安装手册/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://www.moan.ac.cn//2017/03/30/hadoop安装手册/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="hadoop-完全分布式集群搭建"><a href="#hadoop-完全分布式集群搭建" class="headerlink" title="hadoop 完全分布式集群搭建"></a>hadoop 完全分布式集群搭建</h1><p>环境：三台centos 6.x<br>分别为172.16.21.130，172.16.21.131，172.16.21.132<br>主节点在172.16.21.130上，命名为master<br>子节点在131和132上，命名为node1和node2</p>
+<h2 id="安装centOS"><a href="#安装centOS" class="headerlink" title="安装centOS"></a>安装centOS</h2><p>略。可以在vmware上装好一台，然后复制另外两台。</p>
+<h2 id="安装java"><a href="#安装java" class="headerlink" title="安装java"></a>安装java</h2><p>java -version查看java版本，如果已安装并满足条件，直接下一步，否则先安装java，<a href="https://wiki.apache.org/hadoop/HadoopJavaVersions" target="_blank" rel="external">hadoop对应java版本</a><br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[hadoop@localhost .ssh]$ java -version</div><div class="line">java version &quot;1.7.0_45&quot;</div><div class="line">OpenJDK Runtime Environment (rhel-2.4.3.3.el6-x86_64 u45-b15)</div><div class="line">OpenJDK 64-Bit Server VM (build 24.45-b08, mixed mode)</div></pre></td></tr></table></figure></p>
+<p>java目录<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.45.x86_64/</div></pre></td></tr></table></figure></p>
+<h2 id="创建hadoop用户和用户组"><a href="#创建hadoop用户和用户组" class="headerlink" title="创建hadoop用户和用户组"></a>创建hadoop用户和用户组</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd</div><div class="line">groupadd hadoop     #添加一个叫hadoop的用户组</div><div class="line">useradd hadoop -g hadoop  #添加一个hadoop用户并加入hadoop组</div><div class="line">passwd hadoop       #添加密码 后面配置ssh免密码登录时需要</div><div class="line">（暂时设置为hadoop）</div><div class="line">vim /etc/sudoers    #编辑sudoers文件，给hadoop用户sudo权限</div><div class="line">hadoop ALL=(ALL) ALL    #在sudoers尾部加上这一行，然后wq!</div></pre></td></tr></table></figure>
+<h2 id="设置网络"><a href="#设置网络" class="headerlink" title="设置网络"></a>设置网络</h2><ul>
+<li>/etc/sysconfig/network-scripts/ifcfg-eth0这是网卡eth0的配置文件，如果只有一张网卡那肯定默认是eth0，之后是eth1, eth2 … </li>
+<li>/etc/sysconfig/network 这是设置主机名(hostname)的地方</li>
+<li>/etc/resolv.conf 这是配置dns的地方 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">vim /etc/sysconfig/network-scripts/ifcfg-eth0</div><div class="line"></div><div class="line">DEVICE=eth0</div><div class="line">HWADDR=00:0C:29:B6:8A:D8</div><div class="line">TYPE=Ethernet</div><div class="line">UUID=fe7e969e-2754-4b84-99d5-fa9d8d3ccbd7</div><div class="line">ONBOOT=yes</div><div class="line">NM_CONTROLLED=yes   #这里改为no后 远程连接会断掉。</div><div class="line">BOOTPROTO=none</div><div class="line">IPADDR=172.16.21.130</div><div class="line">GATEWAY=172.16.21.1</div><div class="line">NETMASK=255.255.255.0</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">vim /etc/resolv.conf</div><div class="line"></div><div class="line">nameserver 172.16.21.1</div><div class="line">nameserver 8.8.8.8</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">vim /etc/sysconfig/network</div><div class="line"></div><div class="line">NETWORKING=yes</div><div class="line">HOSTNAME=master</div><div class="line">GATEWAY=172.16.21.1</div><div class="line">NTPSERVERARGS=iburst</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">vim /etc/hosts</div><div class="line"></div><div class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</div><div class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</div><div class="line">172.16.21.130 master</div><div class="line">172.16.21.131 node1</div><div class="line">172.16.21.132 node2</div></pre></td></tr></table></figure>
+<p>##配置ssh免登陆<br>master<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">su hadoop</div><div class="line">cd ~        #进入hadoop用户目录</div><div class="line">ssh-keygen -t rsa -P &quot;&quot;   </div><div class="line">#这是生成ssh密码的命令，-t 参数表示生成算法，有rsa和dsa两种；-P表示使用的密码，这里使用&quot;&quot;空字符串表示无密码。</div><div class="line">#回车后，会提示三次输入信息，我们直接回车即可。这样就在~/.ssh目录下生成了几个东西</div><div class="line">cd ~/.ssh</div><div class="line">cat id_rsa.pub &gt;&gt; authorized_keys #这个命令将id_rsa.pub的内容追加到了authorized_keys的内容后面</div></pre></td></tr></table></figure></p>
+<p>node1<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">su hadoop</div><div class="line">cd ~</div><div class="line">ssh-keygen -t rsa -P &quot;&quot;  </div><div class="line">cd ~/.ssh</div><div class="line">scp id_rsa.pub master:/home/hadoop/.ssh/id_rsa.pub.node1</div><div class="line">(yes hadoop)</div></pre></td></tr></table></figure></p>
+<p>node2<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">su hadoop</div><div class="line">cd ~</div><div class="line">ssh-keygen -t rsa -P &quot;&quot;  </div><div class="line">cd ~/.ssh</div><div class="line">scp id_rsa.pub master:/home/hadoop/.ssh/id_rsa.pub.node2</div><div class="line">(yes hadoop)</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[hadoop@localhost .ssh]$ scp id_rsa.pub master:/home/hadoop/.ssh/id_rsa.pub.node2</div><div class="line">The authenticity of host &apos;master (172.16.21.130)&apos; can&apos;t be established.</div><div class="line">RSA key fingerprint is 3c:12:77:c9:fe:00:9b:a6:f6:3a:b0:69:2e:f0:94:0c.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;master,172.16.21.130&apos; (RSA) to the list of known hosts.</div><div class="line">hadoop@master&apos;s password:</div><div class="line">id_rsa.pub                          100%  410     0.4KB/s   00:00</div></pre></td></tr></table></figure>
+<p>回到master,将这两个公钥都追加到authorized_keys后面<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cat id_rsa.pub.node1 &gt;&gt; authorized_keys</div><div class="line">cat id_rsa.pub.node2 &gt;&gt; authorized_keys</div></pre></td></tr></table></figure></p>
+<p>将keys复制给node1和node2<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">scp authorized_keys node1:/home/hadoop/.ssh/</div><div class="line">scp authorized_keys node2:/home/hadoop/.ssh/</div></pre></td></tr></table></figure></p>
+<p>设置ssh权限<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo chmod 644 ~/.ssh/authorized_keys</div><div class="line">sudo chmod 700 ~/.ssh</div></pre></td></tr></table></figure></p>
+<h2 id="下载，安装并配置hadoop"><a href="#下载，安装并配置hadoop" class="headerlink" title="下载，安装并配置hadoop"></a>下载，安装并配置hadoop</h2><p>下载略，我用的是hadoop-2.7.3.tar.gz<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo tar -zxvf hadoop-2.7.3.tar.gz</div><div class="line">sudo mv hadoop-2.7.3 ~/hadoop</div></pre></td></tr></table></figure></p>
+<p>修改配置文件：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd ~/hadoop/etc/hadoop</div><div class="line">sudo vim hadoop-env.sh</div><div class="line"># 这个文件要修改的地方就是JAVA_HOME环境变量</div><div class="line"># The java implementation to use.</div><div class="line">export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.45.x86_64/jre</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo vim yarn-env.sh</div><div class="line"># some Java parameters</div><div class="line"># export JAVA_HOME=/home/y/libexec/jdk1.6.0/</div><div class="line">export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.45.x86_64/jre</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo vim slaves</div><div class="line"># 配置节点</div><div class="line">node1</div><div class="line">node2</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">sudo mkdir /home/hadoop/hadoop/tmp</div><div class="line">sudo vim core-site.xml</div><div class="line">#fs.default.name配置了hadoop的HDFS系统的命名，位置为主机的9000端口；hadoop.tmp.dir配置了hadoop的tmp目录的根位置。这里使用了一个文件系统中没有的位置，所以要先用mkdir命令新建一下。</div><div class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>/home/hadoop/hadoop/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.default.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://master:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">vim ~/hadoop/etc/hadoop/hdfs-site.xml</div><div class="line">#这个是hdfs的配置文件，dfs.http.address配置了hdfs的http的访问位置；dfs.replication配置了文件块的副本数，一般不大于从机的个数。</div><div class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.http.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:50070<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.secondary.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:50090<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">sudo cp mapred-site.xml.template mapred-site.xml</div><div class="line">vim mapred-site.xml</div><div class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8032<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.scheduler.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8030<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8088<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.resource-tracker.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8031<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.admin.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8033<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services.mapreduce.shuffle.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.mapred.ShuffleHandler<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>将配置好的hadoop复制到其他节点<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">scp -r ~/hadoop hadoop@node1:~/</div><div class="line">scp –r ~/hadoop hadoop@node2:~/</div><div class="line">如果上述命令不成功，可尝试:</div><div class="line">cd ~</div><div class="line">scp -r hadoop hadoop@node1:~/</div></pre></td></tr></table></figure></p>
+<p>格式化namenode<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd ~/hadoop</div><div class="line">sudo ./bin/hdfs namenode -format</div><div class="line"></div><div class="line">17/03/23 22:23:34 INFO util.ExitUtil: Exiting with status 0</div><div class="line">17/03/23 22:23:34 INFO namenode.NameNode: SHUTDOWN_MSG:</div><div class="line">/************************************************************</div><div class="line">SHUTDOWN_MSG: Shutting down NameNode at localhost.localdomain/127.0.0.1</div><div class="line">************************************************************/</div></pre></td></tr></table></figure></p>
+<p>启动<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo ./sbin/start-all.sh</div><div class="line">This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh</div><div class="line">Starting namenodes on [master]</div><div class="line">The authenticity of host &apos;master (172.16.21.130)&apos; can&apos;t be established.</div><div class="line">RSA key fingerprint is 3c:12:77:c9:fe:00:9b:a6:f6:3a:b0:69:2e:f0:94:0c.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">master: Warning: Permanently added &apos;master,172.16.21.130&apos; (RSA) to the list of known hosts.</div><div class="line">root@master&apos;s password:</div><div class="line">master: starting namenode, logging to /home/hadoop/hadoop/logs/hadoop-root-namenode-localhost.localdomain.out</div><div class="line">root@node2&apos;s password: root@node1&apos;s password:</div><div class="line">node2: starting datanode, logging to /home/hadoop/hadoop/logs/hadoop-root-datanode-localhost.localdomain.out</div></pre></td></tr></table></figure></p>
+<p> 管理页面</p>
+<p> #在hdfs-site.xml和yarn-site.xml配置过的<br><a href="172.16.21.130:50070" target="_blank" rel="external">dfs.http</a><br><a href="172.16.21.130:8088" target="_blank" rel="external">yarn.resourcemanager</a></p>
+<p>查看进程<br>jps<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">openjdk好像没有jps，可以用 ```ps -aux | grep java | awk &apos;&#123;print $12&#125;&apos; ```代替</div></pre></td></tr></table></figure></p>
+<p>master下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[hadoop@localhost hadoop]$ ps -aux | grep java | awk &apos;&#123;print $12&#125;&apos;</div><div class="line">Warning: bad syntax, perhaps a bogus &apos;-&apos;? See /usr/share/doc/procps-3.2.8/FAQ</div><div class="line">-Dproc_namenode</div><div class="line">-Dproc_secondarynamenode</div><div class="line">-Dproc_resourcemanager</div><div class="line">java</div></pre></td></tr></table></figure></p>
+<p>node1：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[hadoop@localhost hadoop]$ ps -aux | grep java | awk &apos;&#123;print $12&#125;&apos;</div><div class="line">Warning: bad syntax, perhaps a bogus &apos;-&apos;? See /usr/share/doc/procps-3.2.8/FAQ</div><div class="line">-Dproc_datanode</div><div class="line">-Dproc_nodemanager</div><div class="line">java</div></pre></td></tr></table></figure></p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/03/30/hadoop运行官方wordcount-demo/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/03/13/DAG图/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="莫安's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        cheers0606520@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:cheers0606520@gmail.com" target="_blank" title="联系我">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        联系我
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/centos/">centos<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/demo/">demo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/ext/">ext<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/extjs/">extjs<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hadoop/">hadoop<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/平行世界/">平行世界<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/数据结构/">数据结构<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/碎碎念/">碎碎念<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/算法/">算法<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timepill" title="神秘代码">
+                
+                    <i class="material-icons sidebar-material-icons">fingerprint</i>
+                
+                神秘代码
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">15</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+        <a href="http://weibo.com/171221720/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-weibo.png);">
+                <span class="visuallyhidden">Weibo</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/Cheers0606" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/zhang-jiu-jun-shan/activities" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-zhihu.png);">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+        <a href="http://space.bilibili.com/7587061/#!/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-bilibili.png);">
+                <span class="visuallyhidden">Bilibili</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;莫安
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>
