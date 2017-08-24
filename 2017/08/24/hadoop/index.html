@@ -10,7 +10,7 @@
     
     <title>
         
-            windows下搭建hadoop开发环境 | 
+            hadoop | 
         
         莫安
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="莫安">
     <meta name="description" content="心无属，意斑斓">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,hadoop">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://www.moan.ac.cn">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="windows下搭建hadoop开发环境 | 莫安">
+    <meta property="og:title" content="hadoop | 莫安">
     <meta property="og:description" content="心无属，意斑斓">
-    
+    <meta property="og:article:tag" content="hadoop"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -234,7 +234,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#普通java开发环境"><span class="post-toc-number">1.</span> <span class="post-toc-text">普通java开发环境</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解压hadoop-2-7-3"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">解压hadoop-2.7.3</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载hadoop2x-eclipse-plugin"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">下载hadoop2x-eclipse-plugin</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置eclipse"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">配置eclipse</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可能遇到的错误"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">可能遇到的错误</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#maven集成环境"><span class="post-toc-number">2.</span> <span class="post-toc-text">maven集成环境</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载hadoop2x-eclipse-plugin-1"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">下载hadoop2x-eclipse-plugin</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置eclipse-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">配置eclipse</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#新建maven项目。修改pom-xml，添加以下依赖包："><span class="post-toc-number">2.3.</span> <span class="post-toc-text">新建maven项目。修改pom.xml，添加以下依赖包：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加配置文件"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">添加配置文件</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#hadoop一些常见操作和mapreduce一些错误解决方式"><span class="post-toc-number">1.</span> <span class="post-toc-text">hadoop一些常见操作和mapreduce一些错误解决方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看hdfs中的文件"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">查看hdfs中的文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#将文件复制到hdfs中"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">将文件复制到hdfs中</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看hadoop空间"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">查看hadoop空间</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#集群之间拷贝文件"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">集群之间拷贝文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#损坏快"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">损坏快</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#reduce-oom"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">reduce oom</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#pig-mapreduce任务-超时"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">pig mapreduce任务 超时</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Non-increasing-Bloom-keys"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">Non-increasing Bloom keys</span></a></li></ol></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -270,7 +270,7 @@
         
     
             <p class="article-headline-p">
-                windows下搭建hadoop开发环境
+                hadoop
             </p>
         </div>
 
@@ -289,7 +289,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>莫安</strong>
-        <span>3月 30, 2017</span>
+        <span>8月 24, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -313,7 +313,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="/tags/hadoop/">hadoop</a>
     </ul>
     
 
@@ -329,7 +329,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=windows下搭建hadoop开发环境&url=http://www.moan.ac.cn//2017/03/30/windows下搭建hadoop开发环境/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=hadoop&url=http://www.moan.ac.cn//2017/08/24/hadoop/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -338,7 +338,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=windows下搭建hadoop开发环境&url=http://www.moan.ac.cn//2017/03/30/windows下搭建hadoop开发环境/index.html&via=莫安" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=hadoop&url=http://www.moan.ac.cn//2017/08/24/hadoop/index.html&via=莫安" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -347,7 +347,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://www.moan.ac.cn//2017/03/30/windows下搭建hadoop开发环境/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://www.moan.ac.cn//2017/08/24/hadoop/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -356,7 +356,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://www.moan.ac.cn//2017/03/30/windows下搭建hadoop开发环境/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://www.moan.ac.cn//2017/08/24/hadoop/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -380,32 +380,26 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>eclipse版本：<br>Version: 3.6.1.RELEASE<br>Build Id: 201408250818<br>Platform: Eclipse Luna (4.4)</p>
-<p>hadoop版本：hadoop-2.7.3</p>
-<h1 id="普通java开发环境"><a href="#普通java开发环境" class="headerlink" title="普通java开发环境"></a>普通java开发环境</h1><h2 id="解压hadoop-2-7-3"><a href="#解压hadoop-2-7-3" class="headerlink" title="解压hadoop-2.7.3"></a>解压hadoop-2.7.3</h2><p>略</p>
-<h2 id="下载hadoop2x-eclipse-plugin"><a href="#下载hadoop2x-eclipse-plugin" class="headerlink" title="下载hadoop2x-eclipse-plugin"></a>下载hadoop2x-eclipse-plugin</h2><p><a href="https://github.com/winghc/hadoop2x-eclipse-plugin" target="_blank" rel="external">github地址</a><br>解压后将hadoop-eclipse-plugin-2.6.0.jar放到eclipse的plugin目录下</p>
-<h2 id="配置eclipse"><a href="#配置eclipse" class="headerlink" title="配置eclipse"></a>配置eclipse</h2><p>打开eclipse，windows-&gt;preferences-&gt;hadoop Map/Reduce  设置hadoop路径（前面解压的路径）<br>windows-&gt;open perspective-&gt;Map/Reduce<br>windows-&gt;show view -&gt;Map/Reduce location<br>Map/Reduce location中：new hadoop location<br>配置好ip和端口，左侧DFS Location中能查看到DFS目录即可。<br>将hdfs-site.xml core-site.xml mapred-site.xml log4j.properties放到源文件目录下。</p>
-<h2 id="可能遇到的错误"><a href="#可能遇到的错误" class="headerlink" title="可能遇到的错误"></a>可能遇到的错误</h2><ul>
-<li><p>An internal error occurred during: “Map/Reducelocation status updater”.java.lang.NullPointerException<br>hadoop-eclipse-plugin-2.6.0.jar放到Eclipse的plugins目录下，重启一下Eclipse，然后，打开Window–&gt;Preferens，可以看到Hadoop Map/Reduc选项，然后点击出现了An internal error occurredduring: “Map/Reduce location status updater”.java.lang.NullPointerException.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">刚配置部署的Hadoop还没创建输入和输出目录，先在hdfs上建个文件夹。</div><div class="line">#bin/hdfs dfs -mkdir –p /xxx/input</div><div class="line">#bin/hdfs dfs -mkdir -p /xxx/output</div></pre></td></tr></table></figure>
+        <h1 id="hadoop一些常见操作和mapreduce一些错误解决方式"><a href="#hadoop一些常见操作和mapreduce一些错误解决方式" class="headerlink" title="hadoop一些常见操作和mapreduce一些错误解决方式"></a>hadoop一些常见操作和mapreduce一些错误解决方式</h1><h2 id="查看hdfs中的文件"><a href="#查看hdfs中的文件" class="headerlink" title="查看hdfs中的文件"></a>查看hdfs中的文件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hadoop fs -ls /</div></pre></td></tr></table></figure>
+<h2 id="将文件复制到hdfs中"><a href="#将文件复制到hdfs中" class="headerlink" title="将文件复制到hdfs中"></a>将文件复制到hdfs中</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hadoop fs -put &#123;源文件&#125; &#123;目的地址&#125;</div><div class="line">hadoop fs -put /data/test.csv /user/root/</div></pre></td></tr></table></figure>
+<h2 id="查看hadoop空间"><a href="#查看hadoop空间" class="headerlink" title="查看hadoop空间"></a>查看hadoop空间</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hadoop fs -count -q</div><div class="line">        none             inf            none             inf           31          152         2638884531 /user/root</div></pre></td></tr></table></figure>
+<h2 id="集群之间拷贝文件"><a href="#集群之间拷贝文件" class="headerlink" title="集群之间拷贝文件"></a>集群之间拷贝文件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#必须是hadoop的namenode所在的机子的ip</div><div class="line">hadoop distcp hdfs://172.16.11.124:8020/user/root/C_PICRECORD_TEMP1 \ hdfs://172.16.8.110:8020/user/root/</div><div class="line">hadoop distcp hdfs://10.0.16.31:8020/user/root/C_PICRECORD_HUM \ hdfs://172.16.21.153:8020/user/root/</div></pre></td></tr></table></figure>
+<p><strong>注</strong>以上的命令会将整个文件夹拷贝过去</p>
+<h2 id="损坏快"><a href="#损坏快" class="headerlink" title="损坏快"></a>损坏快</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hadoop fsck /</div><div class="line">#如果是solr损坏，一般启动solr后会自动修复（需要一段时间），如果无法修复，需要删除掉损坏的块，然后重新同步solr数据。</div><div class="line">#如果是hbase损坏。。。自求多福</div><div class="line">#删除损坏快</div><div class="line">hadoop fsck --delete</div></pre></td></tr></table></figure>
+<h2 id="reduce-oom"><a href="#reduce-oom" class="headerlink" title="reduce oom"></a>reduce oom</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Error: org.apache.hadoop.mapreduce.task.reduce.Shuffle$ShuffleError: error in shuffle in fetcher#4</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.Shuffle.run(Shuffle.java:134)</div><div class="line">    at org.apache.hadoop.mapred.ReduceTask.run(ReduceTask.java:376)</div><div class="line">    at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:163)</div><div class="line">    at java.security.AccessController.doPrivileged(Native Method)</div><div class="line">    at javax.security.auth.Subject.doAs(Subject.java:415)</div><div class="line">    at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1671)</div><div class="line">    at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)</div><div class="line">Caused by: java.lang.OutOfMemoryError: Java heap space</div><div class="line">    at org.apache.hadoop.io.BoundedByteArrayOutputStream.&lt;init&gt;(BoundedByteArrayOutputStream.java:56)</div><div class="line">    at org.apache.hadoop.io.BoundedByteArrayOutputStream.&lt;init&gt;(BoundedByteArrayOutputStream.java:46)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.InMemoryMapOutput.&lt;init&gt;(InMemoryMapOutput.java:63)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.MergeManagerImpl.unconditionalReserve(MergeManagerImpl.java:304)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.MergeManagerImpl.reserve(MergeManagerImpl.java:294)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.Fetcher.copyMapOutput(Fetcher.java:511)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.Fetcher.copyFromHost(Fetcher.java:329)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.Fetcher.run(Fetcher.java:193)</div></pre></td></tr></table></figure>
+<ol>
+<li><p>适当调大：<br>Reduce 任务内存<br>mapreduce.reduce.memory.mb<br>Reduce 任务最大堆栈<br>mapreduce.reduce.java.opts.max.heap<br>【Reduce任务最大堆栈应&lt;=Reduce任务内存*0.8】<br>【如任务内存2.5G 堆栈2G】</p>
 </li>
-<li><p>Exception in thread “main” java.lang.NullPointerException atjava.lang.ProcessBuilder.start(Unknown Source)<br>缺少winutils.exe。<br>  <a href="https://github.com/steveloughran/winutils" target="_blank" rel="external">github-winutils</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">下载后放到hadoop安装目录下的bin目录，然后设置hadoop.home.dir</div><div class="line">        System.setProperty(&quot;hadoop.home.dir&quot;,&quot;D:\\gosuncn\\hadoop\\hadoop-2.7.3&quot;);//winutils.exe</div></pre></td></tr></table></figure>
+<li><p>map全部执行完再执行reduce<br>mapreduce.job.reduce.slowstart.completedmaps=1.0</p>
 </li>
-<li><p>Exception in thread “main”java.lang.UnsatisfiedLinkError:org.apache.hadoop.io.nativeio.NativeIO$Windows.access0(Ljava/lang/String;I)Z<br>缺少hadoop.dll</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">将bin目录下的hadoop.dll复制到C:\Windows\System32（或者64，根据实际情况而定）</div></pre></td></tr></table></figure>
+<li><p>配置shuffle</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 备份原来的配置文件</div><div class="line">/data1/zjs/optCluster.sh -c &apos;cp /etc/hadoop/conf.cloudera.yarn/mapred-site.xml /etc/hadoop/conf.cloudera.yarn/mapred-site.xml.bak&apos;</div><div class="line">#增加mapreduce.reduce.shuffle.input.buffer.percent配置（默认值为0.70）</div><div class="line">/data1/zjs/optCluster.sh -c &apos;sed -i &quot;45i &lt;property&gt;\n    &lt;name&gt;mapreduce.reduce.shuffle.input.buffer.percent&lt;/name&gt;\n    &lt;value&gt;0.1&lt;/value&gt;\n&lt;/property&gt;&quot; /etc/hadoop/conf.cloudera.yarn/mapred-site.xml&apos;</div></pre></td></tr></table></figure>
 </li>
-<li><p>org.apache.hadoop.security.AccessControlException: Permissiondenied: user=zhengcy, access=WRITE,inode=”/user/root/output”:root:supergroup:drwxr-xr-x<br>没权限访问output目录。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">hdfs-site.xml添加</div><div class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span> </div><div class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span> </div><div class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">  #设置没有权限，不过我们在正式的 服务器上不能这样设置。</div></pre></td></tr></table></figure>
-</li>
-<li><p>File/usr/root/input/file01.<em>COPYING</em> could only be replicated to 0 nodes instead ofminRepLication (=1) There are 0 datanode(s) running and no node(s) are excludedin this operation<br>还没有格式化hdfs</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo ./bin/hdfs namenode -format</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="maven集成环境"><a href="#maven集成环境" class="headerlink" title="maven集成环境"></a>maven集成环境</h1><h2 id="下载hadoop2x-eclipse-plugin-1"><a href="#下载hadoop2x-eclipse-plugin-1" class="headerlink" title="下载hadoop2x-eclipse-plugin"></a>下载hadoop2x-eclipse-plugin</h2><p><a href="https://github.com/winghc/hadoop2x-eclipse-plugin" target="_blank" rel="external">github地址</a><br>解压后将hadoop-eclipse-plugin-2.6.0.jar放到eclipse的plugin目录下</p>
-<h2 id="配置eclipse-1"><a href="#配置eclipse-1" class="headerlink" title="配置eclipse"></a>配置eclipse</h2><p>打开eclipse，windows-&gt;preferences-&gt;hadoop Map/Reduce  设置hadoop路径（前面解压的路径）<br>windows-&gt;open perspective-&gt;Map/Reduce<br>windows-&gt;show view -&gt;Map/Reduce location<br>Map/Reduce location中：new hadoop location<br>配置好ip和端口，左侧DFS Location中能查看到DFS目录即可。</p>
-<h2 id="新建maven项目。修改pom-xml，添加以下依赖包："><a href="#新建maven项目。修改pom-xml，添加以下依赖包：" class="headerlink" title="新建maven项目。修改pom.xml，添加以下依赖包："></a>新建maven项目。修改pom.xml，添加以下依赖包：</h2><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.7.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.7.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-hdfs --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-hdfs<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.7.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="添加配置文件"><a href="#添加配置文件" class="headerlink" title="添加配置文件"></a>添加配置文件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">将hdfs-site.xml core-site.xml mapred-site.xml log4j.properties放到src/main/resources目录下。</div></pre></td></tr></table></figure>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 删掉某行</div><div class="line">/root/optCluster.sh -c &apos;sed -i &quot;44d&quot; /etc/hadoop/conf.cloudera.yarn/mapred-site.xml&apos;</div></pre></td></tr></table></figure>
+<h2 id="pig-mapreduce任务-超时"><a href="#pig-mapreduce任务-超时" class="headerlink" title="pig mapreduce任务 超时"></a>pig mapreduce任务 超时</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 因为pig脚本需要读取hbase中的所有字段，所以无法读索引，查询时间会较长，导致map任务超时，错误如下：</div><div class="line">Error: java.lang.RuntimeException: org.apache.phoenix.exception.PhoenixIOException: 78883ms passed since the last invocation, timeout is currently set to 60000 </div><div class="line"></div><div class="line"># 修复方案：调整hbase配置。</div><div class="line"># HBase Region Server 租赁周期  默认为1分钟，可调整为2分钟或3分钟。按实际数据量设置。</div><div class="line">hbase.regionserver.lease.period(hbase.client.scanner.timeout.period)</div></pre></td></tr></table></figure>
+<h2 id="Non-increasing-Bloom-keys"><a href="#Non-increasing-Bloom-keys" class="headerlink" title="Non-increasing Bloom keys"></a>Non-increasing Bloom keys</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Error: java.io.IOException: Non-increasing Bloom keys: \x092017-07-29 01:07:44\x00\xC1\x02\x00\x80\x00\x80\x00\xC1\x02\x00\x80\x00\x80\x00\xC1\x03\x00\xC1\x03\x00\x80\x00\xC1\x10\x00\x80\x00\x80\x00\x80\x00\xC1\x03\x00\xC1\x03\x00\x80\x00\x80\x00\x80\x00\x80\x00\x80\x00\x80\x00\x00\x00\x08\xE8\x06o after \x092017-07-29 01:08:07\x00\xC1\x02\x00\x80\x00\x80\x00\xC1\x02\x00\x80\x00\x80\x00\xC1\x03\x00\xC1\x03\x00\x80\x00\xC1\x13\x00\x80\x00\x80\x00\x80\x00\xC1\x03\x00\xC1\x03\x00\x80\x00\x80\x00\x80\x00\x80\x00\x80\x00\x80\x00\x00\x00\x08\xE8\x07\x13</div><div class="line">    at org.apache.hadoop.hbase.regionserver.StoreFile$Writer.appendGeneralBloomfilter(StoreFile.java:911)</div><div class="line">    at org.apache.hadoop.hbase.regionserver.StoreFile$Writer.append(StoreFile.java:947)</div><div class="line">    at org.apache.phoenix.mapreduce.MultiHfileOutputFormat$1.write(MultiHfileOutputFormat.java:188)</div><div class="line">    at org.apache.phoenix.mapreduce.MultiHfileOutputFormat$1.write(MultiHfileOutputFormat.java:133)</div><div class="line">    at org.apache.hadoop.mapred.ReduceTask$NewTrackingRecordWriter.write(ReduceTask.java:558)</div><div class="line">    at org.apache.hadoop.mapreduce.task.TaskInputOutputContextImpl.write(TaskInputOutputContextImpl.java:89)</div><div class="line">    at org.apache.hadoop.mapreduce.lib.reduce.WrappedReducer$Context.write(WrappedReducer.java:105)</div><div class="line">    at org.apache.phoenix.mapreduce.CsvToKeyValueReducer.reduce(CsvToKeyValueReducer.java:50)</div><div class="line">    at org.apache.phoenix.mapreduce.CsvToKeyValueReducer.reduce(CsvToKeyValueReducer.java:33)</div><div class="line">    at org.apache.hadoop.mapreduce.Reducer.run(Reducer.java:171)</div><div class="line">    at org.apache.hadoop.mapred.ReduceTask.runNewReducer(ReduceTask.java:627)</div><div class="line">    at org.apache.hadoop.mapred.ReduceTask.run(ReduceTask.java:389)</div><div class="line">    at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:163)</div><div class="line">    at java.security.AccessController.doPrivileged(Native Method)</div><div class="line">    at javax.security.auth.Subject.doAs(Subject.java:415)</div><div class="line">    at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1671)</div><div class="line">    at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)</div></pre></td></tr></table></figure>
+<p>解决方法：<br>数据问题。要么用spark生成文件时加上排序，要么不用这种方式导入数据。</p>
 
     
 
@@ -429,7 +423,7 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/03/30/sencha开发ext项目/" id="post_nav-newer" class="prev-content">
+        <a href="/2017/08/24/hbase-和-phoenix-一些操作/" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -443,7 +437,7 @@
 
     <!-- Next Nav -->
     
-        <a href="/2017/03/30/hadoop运行官方wordcount-demo/" id="post_nav-older" class="next-content">
+        <a href="/2017/08/23/hello-world/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

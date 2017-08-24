@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!-- 
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.0 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            hbase 和 phoenix 一些操作 | 
+        
+        莫安
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="莫安">
+    <meta name="description" content="心无属，意斑斓">
+    <meta name="keywords" content="null,phoenix,hbase">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="莫安">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://www.moan.ac.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="hbase 和 phoenix 一些操作 | 莫安">
+    <meta property="og:description" content="心无属，意斑斓">
+    <meta property="og:article:tag" content="phoenix,hbase"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/queue.js"></script>
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#hbase"><span class="post-toc-number">1.</span> <span class="post-toc-text">hbase</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装目录"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">安装目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#rowcount"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">rowcount</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#pig备份"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">pig备份</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hbase启用复制功能"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">hbase启用复制功能</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hbase检查和修复"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">hbase检查和修复</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#hbase迁移"><span class="post-toc-number">2.</span> <span class="post-toc-text">hbase迁移</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hbase整理"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">hbase整理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#手动迁移region"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">手动迁移region</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hbase删除"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">hbase删除</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#压缩"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">压缩</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#region-server-表级平衡"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">region server 表级平衡</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#phoenix"><span class="post-toc-number">3.</span> <span class="post-toc-text">phoenix</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#进入控制台"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">进入控制台</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定时备份"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">定时备份</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定时删除"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">定时删除</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mapreduce查询habse记录数"><span class="post-toc-number">3.1.3.</span> <span class="post-toc-text">mapreduce查询habse记录数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#同步solr数据"><span class="post-toc-number">3.1.4.</span> <span class="post-toc-text">同步solr数据</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#同步数据到异步索引"><span class="post-toc-number">3.1.5.</span> <span class="post-toc-text">同步数据到异步索引</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#复制表操作"><span class="post-toc-number">3.1.6.</span> <span class="post-toc-text">复制表操作</span></a></li></ol></li></ol></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 10 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                hbase 和 phoenix 一些操作
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>莫安</strong>
+        <span>8月 24, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/phoenix-hbase/">phoenix,hbase</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=hbase 和 phoenix 一些操作&url=http://www.moan.ac.cn//2017/08/24/hbase-和-phoenix-一些操作/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=hbase 和 phoenix 一些操作&url=http://www.moan.ac.cn//2017/08/24/hbase-和-phoenix-一些操作/index.html&via=莫安" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://www.moan.ac.cn//2017/08/24/hbase-和-phoenix-一些操作/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://www.moan.ac.cn//2017/08/24/hbase-和-phoenix-一些操作/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="hbase"><a href="#hbase" class="headerlink" title="hbase"></a>hbase</h1><h2 id="安装目录"><a href="#安装目录" class="headerlink" title="安装目录"></a>安装目录</h2><p>/usr/lib/hbase/bin</p>
+<h3 id="rowcount"><a href="#rowcount" class="headerlink" title="rowcount"></a>rowcount</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">/usr/lib/hbase/bin/hbase org.apache.hadoop.hbase.mapreduce.RowCounter &apos;C_PICRECORD&apos;</div></pre></td></tr></table></figure>
+<h3 id="pig备份"><a href="#pig备份" class="headerlink" title="pig备份"></a>pig备份</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">vim backup.pig</div><div class="line"># 如果有特征字段需要转base64的话，要替换phoenix-pig-extend-1.0.jar包然后ExtPigStorage加多个参数。</div><div class="line">REGISTER /data/phoenix-4.6.0-HBase-1.0-bin/phoenix-4.6.0-HBase-1.0-client.jar;</div><div class="line">REGISTER /data/phoenix-4.6.0-HBase-1.0-bin/phoenix-pig-extend-1.0.jar;</div><div class="line">rows = load &apos;hbase://table/C_PICRECORD&apos; USING org.apache.phoenix.pig.PhoenixHBaseLoader(&apos;gimaster:2181&apos;);</div><div class="line">STORE rows INTO &apos;C_PICRECORD&apos; USING com.gosun.phoenix.pig.ExtPigStorage(&apos;,&apos;, &apos;\&apos;&apos;);</div><div class="line"></div><div class="line">#wq保存后</div><div class="line">pig backup.pig</div></pre></td></tr></table></figure>
+<h2 id="hbase启用复制功能"><a href="#hbase启用复制功能" class="headerlink" title="hbase启用复制功能"></a>hbase启用复制功能</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hbase shell</div><div class="line">disable &apos;C_PICRECORD&apos; </div><div class="line">alter &apos;C_PICRECORD&apos;,&#123;NAME =&gt; &apos;info&apos;, REPLICATION_SCOPE =&gt; 1&#125;</div><div class="line">enable &apos;C_PICRECORD&apos;</div></pre></td></tr></table></figure>
+<h2 id="hbase检查和修复"><a href="#hbase检查和修复" class="headerlink" title="hbase检查和修复"></a>hbase检查和修复</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#检查</div><div class="line">hbase hbck</div><div class="line">#修复</div><div class="line">hbase hbck -fix</div></pre></td></tr></table></figure>
+<p>会返回所有的region是否正常挂载，如没有正常挂载可以使用下一条命令修复，如果还是不能修复，那需要看日志为什么失败，手工处理。</p>
+<h1 id="hbase迁移"><a href="#hbase迁移" class="headerlink" title="hbase迁移"></a>hbase迁移</h1><ul>
+<li><p>copyTable方式[这个操作需要添加hbase目录里的conf/mapred-site.xml，可以复制hadoop的过来。]</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">bin/hbase org.apache.hadoop.hbase.mapreduce.CopyTable --peer.adr=zookeeper1,zookeeper2,zookeeper3:/hbase &apos;testtable&apos;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Export/Import</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">bin/hbase org.apache.hadoop.hbase.mapreduce.Export testtable /user/testtable [versions] [starttime] [stoptime]</div><div class="line">bin/hbase org.apache.hadoop.hbase.mapreduce.Import testtable /user/testtable</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>跨版本的迁移，我觉得是一个不错的选择，而且copytable不支持多版本，而export支持多版本，比copytable更实用一些。</p>
+<ul>
+<li>直接拷贝hdfs对应的文件<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#首先拷贝hdfs文件，如:</div><div class="line">bin/hadoop distcp hdfs://srcnamenode:9000/hbase/testtable/ hdfs://distnamenode:9000/hbase/testtable/</div><div class="line">#然后在目的hbase上执行:</div><div class="line">bin/hbase org.jruby.Main bin/add_table.rb /hbase/testtable</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>生成meta信息后，重启hbase<br>这个操作是简单的方式，操作之前可以关闭hbase的写入，执行flush所有表（flush ‘testtable’:将所有memstore刷新到hdfs，通常如果发现regionserver的内存使用过大，造成该机的regionserver很多线程block，可以执行一下flush操作，这个操作会造成hbase的storefile数量剧增，应尽量避免这个操作。还有一种情况，在hbase进行迁移的时候，如果选择拷贝文件方式，可以先停写入，然后flush所有表，拷贝文件。）,再distcp拷贝，如果hadoop版本不一致，可以用hftp接口的方式，我推荐使用这种方式，成本低。</p>
+<h2 id="hbase整理"><a href="#hbase整理" class="headerlink" title="hbase整理"></a>hbase整理</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hbase shell</div><div class="line">major_compact &apos;tableName|indexName&apos;</div><div class="line">然后在[这里](http://master:60010/table.jsp?name=C_PICRECORD_IDX_4)查看是否整理完成</div></pre></td></tr></table></figure>
+<h2 id="手动迁移region"><a href="#手动迁移region" class="headerlink" title="手动迁移region"></a>手动迁移region</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hbase shell</div><div class="line">move &apos;740d2bed5d6dcef66bfea56fd135afce&apos;,&apos;slave2,60020,1501833281921&apos;</div></pre></td></tr></table></figure>
+<h2 id="hbase删除"><a href="#hbase删除" class="headerlink" title="hbase删除"></a>hbase删除</h2><ul>
+<li>CDH中停止hbase服务后删除（依赖hbase的服务如lily indexer也要对应停掉并在删除hbase前删除掉）</li>
+<li>删除hbase在Hadoop中的目录<figure class="highlight plain"><figcaption><span>fs -rm -r -skipTrash</span><a href="/hbase```">link</a></figcaption><table><tr><td class="code"><pre><div class="line">+ 删除hbase在zookeeper中的目录</div><div class="line">```shell</div><div class="line">/usr/lib/zookeeper/bin/zkCli.sh</div><div class="line">rmr /hbase</div><div class="line"># 确定下是否已删除</div><div class="line">ls /</div></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">disable &apos;C_PICRECORD&apos;</div><div class="line">alter &apos;C_PICRECORD&apos;, &#123;NAME =&gt; &apos;info&apos;, COMPRESSION =&gt; &apos;snappy&apos;&#125;</div><div class="line">enable &apos;C_PICRECORD&apos;</div></pre></td></tr></table></figure>
+<h2 id="region-server-表级平衡"><a href="#region-server-表级平衡" class="headerlink" title="region server 表级平衡"></a>region server 表级平衡</h2><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="comment">&lt;!-- hbase-site.xml(master) --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.loadbalance.bytable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 重启使配置生效。然后执行下面操作：</div><div class="line">hbase shell</div><div class="line">balance_switch true</div><div class="line">balancer</div><div class="line"># 平衡完成后建议把balance关掉</div><div class="line">balance_switch false</div></pre></td></tr></table></figure>
+<h1 id="phoenix"><a href="#phoenix" class="headerlink" title="phoenix"></a>phoenix</h1><h2 id="进入控制台"><a href="#进入控制台" class="headerlink" title="进入控制台"></a>进入控制台</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd /data/phoenix-4.6.0-HBase-1.0-bin/bin</div><div class="line">./sqlline.py</div></pre></td></tr></table></figure>
+<ul>
+<li><p>查看数据表<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ 删除索引</div><div class="line">```sql</div><div class="line">drop index [indexName] on [tableName];</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>删除表</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> [tableName];</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建表</p>
+<blockquote>
+<p>【说明】指定SALT_BUCKETS为创建加盐表，假如RegionServer总CPU核数为N，则0.5&lt;SALT_BUCKETS&lt;N。( For optimal performance, number of salt buckets should match number of region servers)</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://phoenix.apache.org/performance.html#Salting" target="_blank" rel="external">官网对盐的描述</a> <a href="https://phoenix.apache.org/salted.html" target="_blank" rel="external">see also</a><br><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> C_PICRECORD (</div><div class="line">  <span class="keyword">ID</span> <span class="built_in">VARCHAR</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> PRIMARY <span class="keyword">KEY</span>,</div><div class="line">  <span class="string">"info"</span>.DEV_ID <span class="built_in">BIGINT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">"info"</span>.xxx <span class="built_in">INTEGER</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">"info"</span>.xxx <span class="built_in">VARCHAR</span>(<span class="number">100</span>) <span class="literal">NULL</span>) SALT_BUCKETS=<span class="number">36</span>;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<ul>
+<li>导入数据</li>
+</ul>
+<blockquote>
+<p><strong>note</strong></p>
+<p>对于可变表，更新作为索引的列，PSQL 可以保证索引表的同步更新<br>CsvBulkLoadTool只能保证索引表的追加，当用旧索引值作为条件时可以拿到主表中的旧值</p>
+<p>PSQL导入的数据必须以.csv 结尾，是本地文件，识别不了小写的表。通常一秒能够<br>upsert20k-50k 行（根据行有多宽决定）</p>
+<p>MR bulkload将数据生成为HBase底层能够识别的StoreFile文件格式<br>再通过completebulkload工具将生成的文件移动并热加载到HBase集群中<br>内部会使用phoenix api去处理数据，包括数据类型、salt rowkey处理、索引表同步等等</p>
+<p>PSQL实际上是采用单线程的方式来执行导入，所以效率肯定比不上使用mapreduce<br>方式的CsvBulkLoadTool</p>
+<p>第一种通过PSQL.【说明】-q \’ 指定了csv文件的文本限定符为单引号，具体配置可根据实际的csv文件内容，后面csv为物理机上的路径，不是hdfs中的路径。<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cd /data/phoenix-4.6.0-HBase-1.0-bin/bin</div><div class="line">./psql.py -t C_PICRECORD -q \&apos; -s cbds0,cbds1,cbds2:2181 /data/c_picrecord.csv</div></pre></td></tr></table></figure></p>
+<p>第二种通过mapred方式<br>后面的路径为hdfs中的路径。需要在ResourceManager所在的主机上执行</p>
+<p><strong>注意</strong>：如果出现ClassNotFoundException: org.apache.hadoop.hbase.HBaseConfiguration，需要将原来的jar包删除，<figure class="highlight plain"><figcaption><span>-r</span><a href="/usr/lib/hadoop/lib/phoenix-core-4.6.0-HBase-1.0.jar```">link</a></figcaption><table><tr><td class="code"><pre><div class="line"></div><div class="line">&gt;**注意2**：如果出现```Container [pid=9018,containerID=container_1492765003105_0008_01_000023] is running beyond physical memory limits. Current usage: 4.1 GB of 4 GB physical memory used; 4.8 GB of 8.4 GB virtual memory used. Killing container.```需要修改以下配置：（具体值根据实际情况而定。）</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>Reduce 任务内存<br>mapreduce.reduce.memory.mb = 2.5G<br>Reduce 任务最大堆栈<br>mapreduce.reduce.java.opts.max.heap = 2G<br>yarn.nodemanager.resource.memory-mb：8192<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">```shell</div><div class="line">cd /data/phoenix-4.6.0-HBase-1.0-bin</div><div class="line">hadoop jar phoenix-4.6.0-HBase-1.0-client.jar org.apache.phoenix.mapreduce.CsvBulkLoadTool --table C_PICRECORD --input /user/root/c_ picrecord.csv --zookeeper manager:2181 -q \&apos;</div><div class="line">#5.8的jar包是/data/phoenix-4.8.0-cdh5.8.0/phoenix-4.8.0-cdh5.8.0-client.jar </div><div class="line">hadoop jar phoenix-4.8.0-cdh5.8.0-client.jar org.apache.phoenix.mapreduce.CsvBulkLoadTool --table C_PICRECORD --input /user/root/C_PICRECORD/*.csv -q \&apos;</div><div class="line">#可选配置 -z manager,master,slave1,slave2,slave3:2181</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>创建二级索引</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="comment">--索引1</span></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span>  C_PICRECORD_IDX  <span class="keyword">on</span> C_PICRECORD</div><div class="line">(<span class="string">"info"</span>.CAP_DATE,<span class="string">"info"</span>.CAP_TYPE ,<span class="string">"info"</span>.CAR_NUM)</div><div class="line"> <span class="keyword">INCLUDE</span>(</div><div class="line"><span class="string">"info"</span>.CAR_COLOR,</div><div class="line"><span class="string">"info"</span>.CAR_NUM_COLOR,</div><div class="line"><span class="string">"info"</span>.CAR_LOGO_TYPE,</div><div class="line"><span class="string">"info"</span>.WAY_NUM,</div><div class="line"><span class="string">"info"</span>.ORG_ID,</div><div class="line"><span class="string">"info"</span>.ORG_NAME,</div><div class="line"><span class="string">"info"</span>.CAR_SPEED,</div><div class="line"><span class="string">"info"</span>.CAR_NUM_TYPE,</div><div class="line"><span class="string">"info"</span>.CAR_TYPE,</div><div class="line"><span class="string">"info"</span>.CAR_IMG_URL,</div><div class="line"><span class="string">"info"</span>.GROUPID,</div><div class="line"><span class="string">"info"</span>.DEV_CHN_NAME,</div><div class="line"><span class="string">"info"</span>.LONGITUDE,</div><div class="line"><span class="string">"info"</span>.LATITUDE,</div><div class="line"><span class="string">"info"</span>.CAR_LOGO_CHILDTYPE) ASYNC;</div><div class="line"></div><div class="line"><span class="comment">--索引2</span></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> C_PICRECORD_IDX_COLLISION <span class="keyword">on</span> C_PICRECORD</div><div class="line">(<span class="string">"info"</span>.CAP_DATE,<span class="string">"info"</span>.ORG_ID, <span class="string">"info"</span>.CAP_TYPE,<span class="string">"info"</span>.CAR_NUM)</div><div class="line"> <span class="keyword">INCLUDE</span>(</div><div class="line"><span class="string">"info"</span>.WAY_NUM,</div><div class="line"><span class="string">"info"</span>.ORG_NAME,</div><div class="line"><span class="string">"info"</span>.CAR_SPEED,</div><div class="line"><span class="string">"info"</span>.CAR_NUM_TYPE,</div><div class="line"><span class="string">"info"</span>.CAR_NUM_COLOR,</div><div class="line"><span class="string">"info"</span>.CAR_TYPE,</div><div class="line"><span class="string">"info"</span>.CAR_COLOR,</div><div class="line"><span class="string">"info"</span>.CAR_LOGO_TYPE,</div><div class="line"><span class="string">"info"</span>.CAR_IMG_URL,</div><div class="line"><span class="string">"info"</span>.GROUPID,</div><div class="line"><span class="string">"info"</span>.DEV_CHN_NAME,</div><div class="line"><span class="string">"info"</span>.LONGITUDE,</div><div class="line"><span class="string">"info"</span>.LATITUDE,</div><div class="line"><span class="string">"info"</span>.CAR_LOGO_CHILDTYPE) ASYNC;</div></pre></td></tr></table></figure>
+</li>
+<li><p>同步二级索引</p>
+<blockquote>
+<p>【说明】指定关键字ASYNC说明以异步的方式创建索引表,即只创建一个空的索引表，可以通过执行以下命令把原表的索引分别创建到两个索引表中：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># cd /data/phoenix-4.6.0-HBase-1.0-bin</div><div class="line">hbase org.apache.phoenix.mapreduce.index.IndexTool \ --data-table C_PICRECORD --index-table C_PICRECORD_IDX \ --output-path /tmp/C_PICRECORD_IDX</div><div class="line"></div><div class="line">hbase org.apache.phoenix.mapreduce.index.IndexTool \ --data-table C_PICRECORD --index-table C_PICRECORD_IDX_COLLISION \ --output-path /tmp/C_PICRECORD_IDX_COLLISION</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><strong>注意：运行这两条命令时会在在hdfs中生成相应的—output-path目录，可能会报权限错误，建议在运行命令前把关闭hdfs权限检查(配置名称为dfs.permissions)</strong></p>
+<h3 id="定时备份"><a href="#定时备份" class="headerlink" title="定时备份"></a>定时备份</h3><ul>
+<li>java中创建quartz定时任务。job中调用linux脚本。<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">BASEPATH=$(cd `dirname $0`; pwd)</div><div class="line">#配置文件路径</div><div class="line">export_incremental_record_template_file=$BASEPATH/conf/export_incremental_record_template.pig</div><div class="line">export_incremental_record_file=$BASEPATH/conf/export_incremental_record.pig</div><div class="line">default_path=$BASEPATH/packages/Import_or_Export_Data</div><div class="line">HOSTS_FILE=/etc/hosts</div><div class="line">HADOOP_LIB=/usr/lib/hadoop/lib</div><div class="line">zk_quorum=</div><div class="line">#集群所有主机名，从hosts解析出：master slave1 slave2</div><div class="line">CLUSTER_HOSTS=localhost</div><div class="line">login_name=&quot;admin&quot;              #登录用户名</div><div class="line">login_pwd=&quot;admin&quot;               #登录密码</div><div class="line">start_time=                     #默认查询时间为1天内。1天：86400，1周：604800，1月（30天）：2592000</div><div class="line">end_time=</div><div class="line">file_name=                      #备份的文件夹名字。C_PICRECORD-scheduleTyep-from_time。（scheduleTyep：1：天；2：周；3：月）</div><div class="line">                                        #eg：C_PICRECORD-1-1491961416 表示1491961416到1491961416+86400的数据备份</div><div class="line"></div><div class="line">############################################################</div><div class="line"># 1）解析集群主机名</div><div class="line">############################################################</div><div class="line">while read line</div><div class="line">do</div><div class="line">    if [[ $line == &apos;#&apos;* || $line == *&apos;localhost&apos;* || -z $line ]]</div><div class="line">    then</div><div class="line">        continue</div><div class="line">    fi</div><div class="line">    host_name=`echo $line|cut -d&apos; &apos; -f2`</div><div class="line">    #zk_quorum=&quot;$zk_quorum,$host_name&quot;</div><div class="line">    CLUSTER_HOSTS=&quot;$CLUSTER_HOSTS $host_name&quot;</div><div class="line">done &lt; $HOSTS_FILE</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">#打印帮助信息</div><div class="line"></div><div class="line">function usage()&#123;</div><div class="line">cat &lt;&lt; eof</div><div class="line">Usage:  `basename $0` [-s v] [-e v] [-o v] [-t t] [-z v] [-h]</div><div class="line">  -s：开始时间戳</div><div class="line">  -e：结束时间戳</div><div class="line">  -o：备份文件夹名称。命名规则：C_PICRECORD-$schedule_type-$start_time</div><div class="line">  -t: 备份类型，1：天；2：周；3：月</div><div class="line">  -z: zk地址。master1,master2:2181</div><div class="line">  -h：打印帮助信息</div><div class="line">Example: `basename $0` -s 1491977065 -t 1</div><div class="line">     or: `basename $0` -s 1491977065 -t 1 -o C_PICRECORD-1-1491977065</div><div class="line">     or: `basename $0` -s 1491977065 -e 1491977151 -o C_PICRECORD-1-1491977065</div><div class="line">eof</div><div class="line">echo &quot;no&quot;</div><div class="line">exit 1</div><div class="line">&#125;</div><div class="line"></div><div class="line">#解析参数</div><div class="line">while getopts &apos;s:e:o:t:z:h&apos; OPT; do   </div><div class="line"> case $OPT in</div><div class="line">    s)</div><div class="line">        start_time=&quot;$OPTARG&quot;;;</div><div class="line">    e)</div><div class="line">        end_time=&quot;$OPTARG&quot;;;</div><div class="line">    o)</div><div class="line">        file_name=&quot;$OPTARG&quot;;;</div><div class="line">    t)</div><div class="line">        schedule_type=&quot;$OPTARG&quot;;;</div><div class="line">    z)</div><div class="line">        zk_quorum=&quot;$OPTARG&quot;;;</div><div class="line">    h)</div><div class="line">        echo usage;;</div><div class="line">    ?)</div><div class="line">        usage;; </div><div class="line">           </div><div class="line">    esac</div><div class="line">done</div><div class="line"></div><div class="line">############################################################</div><div class="line">#3） 修改export_incremental_record.pig文件中的zookeeper地址和开始时间</div><div class="line">############################################################</div><div class="line">sed &quot;s#zk_quorum#$&#123;zk_quorum&#125;#g;s#file_name#$&#123;file_name&#125;#g;s#start_time#$&#123;start_time&#125;#g;s#end_time#$&#123;end_time&#125;#g;s#default_path#$&#123;default_path&#125;#g&quot; $export_incremental_record_template_file &gt; $BASEPATH/conf/$&#123;file_name&#125;.pig</div><div class="line"></div><div class="line"></div><div class="line">############################################################</div><div class="line">#4)运行export_picrecord.pig文件</div><div class="line">############################################################</div><div class="line">echo &quot;`date &apos;+%Y-%m-%d %H:%M:%S&apos;`,432 [main] INFO  开始进行数据的备份......&quot; &gt;$BASEPATH/logs/$&#123;file_name&#125;.log</div><div class="line">for v_host in $CLUSTER_HOSTS </div><div class="line">do</div><div class="line">    ssh -o &quot;StrictHostKeyChecking no&quot; root@$v_host &quot;rm -f $HADOOP_LIB/phoenix-core-4.6.0-HBase-1.0.jar&quot; &gt;/dev/null 2&gt;&amp;1</div><div class="line">    ssh -o &quot;StrictHostKeyChecking no&quot; root@$v_host &quot;rm -f $HADOOP_LIB/hbase-indexer-phoenix-mapper-1.0.0.jar&quot; &gt;/dev/null 2&gt;&amp;1</div><div class="line">done</div><div class="line">hadoop fs -rm -r -skipTrash /user/root/C_PICRECORD &gt;&gt;/dev/null 2&gt;&amp;1</div><div class="line">pig -x mapreduce $BASEPATH/conf/$&#123;file_name&#125;.pig 2&gt;&amp;1| grep &apos;org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher&apos; &gt;&gt;$BASEPATH/logs/$&#123;file_name&#125;.log</div><div class="line">result=`grep &apos;Success!&apos; $BASEPATH/logs/$&#123;file_name&#125;.log`</div><div class="line">echo $result &gt;&gt; $BASEPATH/logs/$&#123;file_name&#125;.log</div><div class="line">#echo &quot;end&quot; &gt;&gt; $BASEPATH/logs/exportData.log</div><div class="line">#exit 1</div><div class="line">if [[ -n $result  ]]</div><div class="line">then</div><div class="line">    echo &quot;`date &apos;+%Y-%m-%d %H:%M:%S&apos;`,462 [main] INFO  备份数据成功！数据备份在hdfs的/user/root/$&#123;file_name&#125;路径下&quot;&gt;&gt;$BASEPATH/logs/$&#123;file_name&#125;.log    </div><div class="line">else</div><div class="line">    echo &quot;`date &apos;+%Y-%m-%d %H:%M:%S&apos;`,653 [main] INFO  备份数据是失败！&quot;&gt;&gt;$BASEPATH/logs/$&#123;file_name&#125;.log</div><div class="line">    echo &quot;no&quot;</div><div class="line">    exit 1</div><div class="line">fi</div><div class="line">rm -rf $BASEPATH/conf/$&#123;file_name&#125;.pig &gt;&gt;/dev/null 2&gt;&amp;1</div><div class="line">echo &quot;ok&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h3><p>思路：<br>1.找出最新的CAP_DATE时间<br><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">max</span>(CAP_DATE) <span class="keyword">from</span> C_PICRECORD;</div></pre></td></tr></table></figure></p>
+<p>2.找出要删除的时间之前的最近一条记录的id<br><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">id</span>,CAP_DATE <span class="keyword">from</span> C_PICRECORD <span class="keyword">where</span> CAP_DATE &lt; <span class="string">'2016-02-30 00:00:00'</span> <span class="keyword">order</span> <span class="keyword">by</span> CAP_DATE <span class="keyword">desc</span> <span class="keyword">limit</span> <span class="number">1</span>;</div></pre></td></tr></table></figure></p>
+<p>3.删除这个id之前的记录。(id为行键，删除得干净，如果用CAP_DATE去删除，会因为分布式而删不干净。)<br><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">delete</span> <span class="keyword">from</span> C_PICRECORD <span class="keyword">where</span> <span class="keyword">id</span>&lt;=<span class="string">'&#123;id&#125;'</span>;</div></pre></td></tr></table></figure></p>
+<h3 id="mapreduce查询habse记录数"><a href="#mapreduce查询habse记录数" class="headerlink" title="mapreduce查询habse记录数"></a>mapreduce查询habse记录数</h3><p>使用hbase自带的RowCounter程序。<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hbase org.apache.hadoop.hbase.mapreduce.RowCounter &apos;C_PICRECORD&apos;</div></pre></td></tr></table></figure></p>
+<h3 id="同步solr数据"><a href="#同步solr数据" class="headerlink" title="同步solr数据"></a>同步solr数据</h3><p>把【扩展phoenix与hbase-indexer的数据类型映射】文件夹下的【hbase-indexer-phoenix-mapper-1.0.0.jar】、【phoenix-core-4.6.0-HBase-1.0.jar】放到/usr/lib/hadoop/lib<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hadoop jar /usr/lib/hbase-solr/tools/hbase-indexer-mr-*-job.jar --libjars /usr/lib/hbase-solr/lib/hbase-indexer-phoenix-mapper-1.0.0.jar,/usr/lib/hbase-solr/lib/phoenix-core-4.6.0-HBase-1.0.jar -D &apos;mapred.child.java.opts=-Xmx1000M&apos; --conf /etc/hbase/conf/hbase-site.xml --morphline-file $HOME/morphlines.conf --hbase-indexer-file $HOME/morphline-hbase-mapper.xml --zk-host cbds0:2181,cbds1:2181,cbds2:2181/solr --collection C_PICRECORD --go-live</div><div class="line"></div><div class="line">nohup hadoop jar /usr/lib/hbase-solr/tools/hbase-indexer-mr-*-job.jar --libjars /usr/lib/hbase-solr/lib/hbase-indexer-phoenix-mapper-1.0.0.jar,/usr/lib/hbase-solr/lib/phoenix-core-4.6.0-HBase-1.0.jar -D &apos;mapred.child.java.opts=-Xmx1000M&apos; --conf /etc/hbase/conf/hbase-site.xml --morphline-file $HOME/morphlines.conf --hbase-indexer-file $HOME/morphline-hbase-mapper.xml --zk-host manager:2181,master1:2181,master2:2181/solr --collection C_PICRECORD --go-live --reducers 0 &gt; solr-sync.log 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure></p>
+<p>执行时建议先把store indexer服务关闭。</p>
+<h3 id="同步数据到异步索引"><a href="#同步数据到异步索引" class="headerlink" title="同步数据到异步索引"></a>同步数据到异步索引</h3><p><a href="http://phoenix.apache.org/secondary_indexing.html" target="_blank" rel="external">官网</a></p>
+<blockquote>
+<p>指定关键字ASYNC说明以异步的方式创建索引表,即只创建一个空的索引表，可以通过执行以下命令把原表的索引分别创建到两个索引表中：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hbase org.apache.phoenix.mapreduce.index.IndexTool \ --data-table C_PICRECORD --index-table C_PICRECORD_IDX_1 \ --output-path /tmp/C_PICRECORD_IDX_1</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>注意：运行这两条命令时会在在hdfs中生成相应的—output-path目录，可能会报权限错误，建议在运行命令前把关闭hdfs权限检查(配置名称为dfs.permissions)</p>
+<h3 id="复制表操作"><a href="#复制表操作" class="headerlink" title="复制表操作"></a>复制表操作</h3><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">UPSERT INTO C_PICRECORD_UDFS_60 (ID,TASK_ID,CHN_ID,OSD_TIME,OBJ_COLOR,OBJ_DIRECTION,OBJ_SIZE,OBJ_SPEED,LONGITUDE,LATITUDE,PIC_UUID,PIC_PATH,OBJ_PIC_PATH,RECT_JSON,PERSON_GENDERTYPE,IS_GLASSES,IS_HAT,UPDRESS_TYPE,DOWNDRESS_TYPE,IS_MASK,HARE_STYLE,IS_BACKPACK,IS_CARRYING,IS_CYCLING,AGE_GROUP,IS_HOLD_CHILD,CAR_TYPE,YELLOW_MARK,DRIVER_PHONEING,IS_SUNVISOR_OPEN,IS_DROP,IS_PAPER_BOX,IS_ANNUAL_MARK,IS_DANGEROUS_CAR_MARK,DRIVER_SEATBELT,CAR_LOGO_TYPE,CAR_LOGO_CHILD_TYPE,CAR_NUM,CAR_NUM_COLOR,OBJ_TEXT_FEATURES,OBJ_BIN_FEATURES,OBJ_TYPE,BG_UUID,BG_URL) <span class="keyword">select</span> <span class="keyword">ID</span>,TASK_ID,CHN_ID,OSD_TIME,OBJ_COLOR,OBJ_DIRECTION,OBJ_SIZE,OBJ_SPEED,LONGITUDE,LATITUDE,PIC_UUID,PIC_PATH,OBJ_PIC_PATH,RECT_JSON,PERSON_GENDERTYPE,IS_GLASSES,IS_HAT,UPDRESS_TYPE,DOWNDRESS_TYPE,IS_MASK,HARE_STYLE,IS_BACKPACK,IS_CARRYING,IS_CYCLING,AGE_GROUP,IS_HOLD_CHILD,CAR_TYPE,YELLOW_MARK,DRIVER_PHONEING,IS_SUNVISOR_OPEN,IS_DROP,IS_PAPER_BOX,IS_ANNUAL_MARK,IS_DANGEROUS_CAR_MARK,DRIVER_SEATBELT,CAR_LOGO_TYPE,CAR_LOGO_CHILD_TYPE,CAR_NUM,CAR_NUM_COLOR,OBJ_TEXT_FEATURES,OBJ_BIN_FEATURES,OBJ_TYPE,BG_UUID,BG_URL <span class="keyword">from</span> C_PICRECORD_UDFS <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>;</div></pre></td></tr></table></figure>
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/08/24/hadoop/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="莫安's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        cheers0606520@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:cheers0606520@gmail.com" target="_blank" title="联系我">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        联系我
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/centos/">centos<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/demo/">demo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/ext/">ext<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/extjs/">extjs<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hadoop/">hadoop<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/hbase/">hbase<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/平行世界/">平行世界<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/数据结构/">数据结构<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/碎碎念/">碎碎念<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/算法/">算法<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timepill" title="神秘代码">
+                
+                    <i class="material-icons sidebar-material-icons">fingerprint</i>
+                
+                神秘代码
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">17</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+        <a href="http://weibo.com/171221720/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-weibo.png);">
+                <span class="visuallyhidden">Weibo</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/Cheers0606" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/zhang-jiu-jun-shan/activities" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-zhihu.png);">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+        <a href="http://space.bilibili.com/7587061/#!/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-bilibili.png);">
+                <span class="visuallyhidden">Bilibili</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;莫安
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>
