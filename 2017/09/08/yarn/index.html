@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!-- 
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.0 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            yarn常用操作及错误解决 | 
+        
+        莫安
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="莫安">
+    <meta name="description" content="心无属，意斑斓">
+    <meta name="keywords" content="null,yarn,大数据,hadoop">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="莫安">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://www.moan.ac.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="yarn常用操作及错误解决 | 莫安">
+    <meta property="og:description" content="心无属，意斑斓">
+    <meta property="og:article:tag" content="yarn,大数据,hadoop"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/queue.js"></script>
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#同步索引"><span class="post-toc-number">1.</span> <span class="post-toc-text">同步索引</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#同步solr"><span class="post-toc-number">2.</span> <span class="post-toc-text">同步solr</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#reduce-oom"><span class="post-toc-number">3.</span> <span class="post-toc-text">reduce oom</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#pig-mapreduce任务-超时"><span class="post-toc-number">4.</span> <span class="post-toc-text">pig mapreduce任务 超时</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#rpc-time-out"><span class="post-toc-number">5.</span> <span class="post-toc-text">rpc time out</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Container-killed-by-the-ApplicationMaster-Exit-code-is-143"><span class="post-toc-number">6.</span> <span class="post-toc-text">Container killed by the ApplicationMaster (Exit code is 143)</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参数调优："><span class="post-toc-number"></span> <span class="post-toc-text">参数调优：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#任务级别参数调优"><span class="post-toc-number">1.</span> <span class="post-toc-text">任务级别参数调优</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hadoop任务级别参数调优分两个方面-Map-Task和Reduce-Task。"><span class="post-toc-number">2.</span> <span class="post-toc-text"> hadoop任务级别参数调优分两个方面: Map Task和Reduce Task。</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 10 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                yarn常用操作及错误解决
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/0ce8a3cc7cd98d10bdaca2c8233fb80e7aec9080.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>莫安</strong>
+        <span>9月 08, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/yarn-大数据-hadoop/">yarn,大数据,hadoop</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=yarn常用操作及错误解决&url=http://www.moan.ac.cn//2017/09/08/yarn/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=yarn常用操作及错误解决&url=http://www.moan.ac.cn//2017/09/08/yarn/index.html&via=莫安" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://www.moan.ac.cn//2017/09/08/yarn/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://www.moan.ac.cn//2017/09/08/yarn/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>#数据同步</p>
+<h2 id="同步索引"><a href="#同步索引" class="headerlink" title="同步索引"></a>同步索引</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">nohup hbase org.apache.phoenix.mapreduce.index.IndexTool \ --data-table C_PICRECORD --index-table C_PICRECORD_IDX_4 \ --output-path /tmp/C_PICRECORD_IDX_4 &gt; sync_idx_4.log 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
+<h2 id="同步solr"><a href="#同步solr" class="headerlink" title="同步solr"></a>同步solr</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hadoop jar /usr/lib/hbase-solr/tools/hbase-indexer-mr-*-job.jar --libjars /usr/lib/hbase-solr/lib/hbase-indexer-phoenix-mapper-1.0.0.jar,/usr/lib/hbase-solr/lib/phoenix-core-4.6.0-HBase-1.0.jar -D &apos;mapred.child.java.opts=-Xmx1000M&apos; --conf /etc/hbase/conf/hbase-site.xml --morphline-file $HOME/morphlines.conf --hbase-indexer-file $HOME/morphline-hbase-mapper.xml --zk-host master:2181,slave1:2181,slave2:2181/solr --collection C_PICRECORD --go-live --reducers 0</div></pre></td></tr></table></figure>
+<h2 id="reduce-oom"><a href="#reduce-oom" class="headerlink" title="reduce oom"></a>reduce oom</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Error: org.apache.hadoop.mapreduce.task.reduce.Shuffle$ShuffleError: error in shuffle in fetcher#4</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.Shuffle.run(Shuffle.java:134)</div><div class="line">    at org.apache.hadoop.mapred.ReduceTask.run(ReduceTask.java:376)</div><div class="line">    at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:163)</div><div class="line">    at java.security.AccessController.doPrivileged(Native Method)</div><div class="line">    at javax.security.auth.Subject.doAs(Subject.java:415)</div><div class="line">    at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1671)</div><div class="line">    at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)</div><div class="line">Caused by: java.lang.OutOfMemoryError: Java heap space</div><div class="line">    at org.apache.hadoop.io.BoundedByteArrayOutputStream.&lt;init&gt;(BoundedByteArrayOutputStream.java:56)</div><div class="line">    at org.apache.hadoop.io.BoundedByteArrayOutputStream.&lt;init&gt;(BoundedByteArrayOutputStream.java:46)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.InMemoryMapOutput.&lt;init&gt;(InMemoryMapOutput.java:63)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.MergeManagerImpl.unconditionalReserve(MergeManagerImpl.java:304)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.MergeManagerImpl.reserve(MergeManagerImpl.java:294)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.Fetcher.copyMapOutput(Fetcher.java:511)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.Fetcher.copyFromHost(Fetcher.java:329)</div><div class="line">    at org.apache.hadoop.mapreduce.task.reduce.Fetcher.run(Fetcher.java:193)</div></pre></td></tr></table></figure>
+<ol>
+<li><p>适当调大：<br>Reduce 任务内存<br>mapreduce.reduce.memory.mb<br>Reduce 任务最大堆栈<br>mapreduce.reduce.java.opts.max.heap<br>【Reduce任务最大堆栈应&lt;=Reduce任务内存*0.8】<br>【如任务内存2.5G 堆栈2G】</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Reduce 任务内存</div><div class="line">mapreduce.reduce.memory.mb = 4G</div><div class="line">Reduce 任务最大堆栈</div><div class="line">mapreduce.reduce.java.opts.max.heap = 2G</div><div class="line"></div><div class="line">yarn.scheduler.minimum-allocation-mb：1024</div><div class="line">yarn.scheduler.maximum-allocation-mb：8192</div><div class="line">yarn.nodemanager.resource.memory-mb：8192</div><div class="line">mapreduce.map.memory.mb: 4096</div><div class="line">mapreduce.reduce.memory.mb: 8192</div><div class="line">mapreduce.map.java.opts: -Xmx3072m</div><div class="line">mapreduce.reduce.java.opts: -Xmx6144m</div></pre></td></tr></table></figure>
+</li>
+<li><p>map全部执行完再执行reduce<br>mapreduce.job.reduce.slowstart.completedmaps=1.0</p>
+</li>
+<li><p>配置shuffle</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 方式1：</div><div class="line"># 备份原来的配置文件</div><div class="line">/data1/zjs/optCluster.sh -c &apos;cp /etc/hadoop/conf.cloudera.yarn/mapred-site.xml /etc/hadoop/conf.cloudera.yarn/mapred-site.xml.bak&apos;</div><div class="line">#增加mapreduce.reduce.shuffle.input.buffer.percent配置（默认值为0.70）</div><div class="line">/data1/zjs/optCluster.sh -c &apos;sed -i &quot;44i &lt;property&gt;\n    &lt;name&gt;mapreduce.reduce.shuffle.input.buffer.percent&lt;/name&gt;\n    &lt;value&gt;0.1&lt;/value&gt;\n&lt;/property&gt;&quot; /etc/hadoop/conf.cloudera.yarn/mapred-site.xml&apos;</div><div class="line"></div><div class="line"># 方式2:</div><div class="line"># 在CDH中，选择yarn配置。 选中高级，搜索mapreduce</div><div class="line"># YARN 服务 MapReduce 高级配置代码段（安全阀）</div><div class="line"># mapred-site.xml 的 MapReduce 客户端高级配置代码段（安全阀）</div><div class="line"># 以上两个不知道哪个，志明的文档是第一个，方式1配置的应该是第二个。（可能两个都可以）</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;mapreduce.reduce.shuffle.input.buffer.percent&lt;/name&gt;</div><div class="line">&lt;value&gt;0.10&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 删掉某行</div><div class="line">/root/optCluster.sh -c &apos;sed -i &quot;44d&quot; /etc/hadoop/conf.cloudera.yarn/mapred-site.xml&apos;</div></pre></td></tr></table></figure>
+<p>phoenix的client包下的mapred-default.xml有该配置项，不知道是否有影响。</p>
+<h2 id="pig-mapreduce任务-超时"><a href="#pig-mapreduce任务-超时" class="headerlink" title="pig mapreduce任务 超时"></a>pig mapreduce任务 超时</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 因为pig脚本需要读取hbase中的所有字段，所以无法读索引，查询时间会较长，导致map任务超时，错误如下：</div><div class="line">Error: java.lang.RuntimeException: org.apache.phoenix.exception.PhoenixIOException: 78883ms passed since the last invocation, timeout is currently set to 60000 </div><div class="line"></div><div class="line"># 修复方案：调整hbase配置。</div><div class="line"># HBase Region Server 租赁周期  默认为1分钟，可调整为2分钟或3分钟。按实际数据量设置。</div><div class="line">hbase.regionserver.lease.period(hbase.client.scanner.timeout.period)</div></pre></td></tr></table></figure>
+<h2 id="rpc-time-out"><a href="#rpc-time-out" class="headerlink" title="rpc time out"></a>rpc time out</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Error: java.lang.RuntimeException: org.apache.phoenix.exception.PhoenixIOException: Failed after retry of OutOfOrderScannerNextException: was there a rpc timeout?</div><div class="line">    at org.apache.phoenix.mapreduce.PhoenixRecordReader.nextKeyValue(PhoenixRecordReader.java:159)</div><div class="line">    at org.apache.hadoop.mapred.MapTask$NewTrackingRecordReader.nextKeyValue(MapTask.java:556)</div><div class="line">    at org.apache.hadoop.mapreduce.task.MapContextImpl.nextKeyValue(MapContextImpl.java:80)</div><div class="line">    at org.apache.hadoop.mapreduce.lib.map.WrappedMapper$Context.nextKeyValue(WrappedMapper.java:91)</div><div class="line">    at org.apache.hadoop.mapreduce.Mapper.run(Mapper.java:144)</div><div class="line">    at org.apache.hadoop.mapred.MapTask.runNewMapper(MapTask.java:787)</div><div class="line">    at org.apache.hadoop.mapred.MapTask.run(MapTask.java:341)</div><div class="line">    at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:163)</div><div class="line">    at java.security.AccessController.doPrivileged(Native Method)</div><div class="line">    at javax.security.auth.Subject.doAs(Subject.java:415)</div><div class="line">    at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1671)</div><div class="line">    at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)</div><div class="line">Caused by: org.apache.phoenix.exception.PhoenixIOException: Failed after retry of OutOfOrderScannerNextException: was there a rpc timeout?</div><div class="line">    at org.apache.phoenix.util.ServerUtil.parseServerException(ServerUtil.java:108)</div><div class="line">    at org.apache.phoenix.iterate.ScanningResultIterator.next(ScanningResultIterator.java:61)</div><div class="line">    at org.apache.phoenix.iterate.TableResultIterator.next(TableResultIterator.java:107)</div><div class="line">    at org.apache.phoenix.iterate.LookAheadResultIterator$1.advance(LookAheadResultIterator.java:47)</div><div class="line">    at org.apache.phoenix.iterate.LookAheadResultIterator.init(LookAheadResultIterator.java:59)</div><div class="line">    at org.apache.phoenix.iterate.LookAheadResultIterator.peek(LookAheadResultIterator.java:73)</div><div class="line">    at org.apache.phoenix.iterate.RoundRobinResultIterator$RoundRobinIterator.peek(RoundRobinResultIterator.java:320)</div><div class="line">    at org.apache.phoenix.iterate.RoundRobinResultIterator.next(RoundRobinResultIterator.java:96)</div><div class="line">    at org.apache.phoenix.jdbc.PhoenixResultSet.next(PhoenixResultSet.java:771)</div><div class="line">    at org.apache.phoenix.mapreduce.PhoenixRecordReader.nextKeyValue(PhoenixRecordReader.java:152)</div><div class="line">    ... 11 more</div><div class="line">Caused by: org.apache.hadoop.hbase.DoNotRetryIOException: Failed after retry of OutOfOrderScannerNextException: was there a rpc timeout?</div><div class="line">    at org.apache.hadoop.hbase.client.ClientScanner.loadCache(ClientScanner.java:461)</div><div class="line">    at org.apache.hadoop.hbase.client.ClientScanner.next(ClientScanner.java:337)</div><div class="line">    at org.apache.phoenix.iterate.ScanningResultIterator.next(ScanningResultIterator.java:55)</div><div class="line">    ... 19 more</div><div class="line">Caused by: org.apache.hadoop.hbase.exceptions.OutOfOrderScannerNextException: org.apache.hadoop.hbase.exceptions.OutOfOrderScannerNextException: Expected nextCallSeq: 1 But the nextCallSeq got from client: 0; request=scanner_id: 499 number_of_rows: 10000 close_scanner: false next_call_seq: 0</div><div class="line">    at org.apache.hadoop.hbase.regionserver.RSRpcServices.scan(RSRpcServices.java:2139)</div><div class="line">    at org.apache.hadoop.hbase.protobuf.generated.ClientProtos$ClientService$2.callBlockingMethod(ClientProtos.java:31443)</div><div class="line">    at org.apache.hadoop.hbase.ipc.RpcServer.call(RpcServer.java:2035)</div><div class="line">    at org.apache.hadoop.hbase.ipc.CallRunner.run(CallRunner.java:107)</div><div class="line">    at org.apache.hadoop.hbase.ipc.RpcExecutor.consumerLoop(RpcExecutor.java:130)</div><div class="line">    at org.apache.hadoop.hbase.ipc.RpcExecutor$1.run(RpcExecutor.java:107)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">    at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)</div><div class="line">    at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)</div><div class="line">    at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)</div><div class="line">    at java.lang.reflect.Constructor.newInstance(Constructor.java:526)</div><div class="line">    at org.apache.hadoop.ipc.RemoteException.instantiateException(RemoteException.java:106)</div><div class="line">    at org.apache.hadoop.ipc.RemoteException.unwrapRemoteException(RemoteException.java:95)</div><div class="line">    at org.apache.hadoop.hbase.protobuf.ProtobufUtil.getRemoteException(ProtobufUtil.java:326)</div><div class="line">    at org.apache.hadoop.hbase.client.ScannerCallable.call(ScannerCallable.java:246)</div><div class="line">    at org.apache.hadoop.hbase.client.ScannerCallable.call(ScannerCallable.java:62)</div><div class="line">    at org.apache.hadoop.hbase.client.RpcRetryingCaller.callWithoutRetries(RpcRetryingCaller.java:200)</div><div class="line">    at org.apache.hadoop.hbase.client.ScannerCallableWithReplicas$RetryingRPC.call(ScannerCallableWithReplicas.java:332)</div><div class="line">    at org.apache.hadoop.hbase.client.ScannerCallableWithReplicas$RetryingRPC.call(ScannerCallableWithReplicas.java:306)</div><div class="line">    at org.apache.hadoop.hbase.client.RpcRetryingCaller.callWithRetries(RpcRetryingCaller.java:126)</div><div class="line">    at org.apache.hadoop.hbase.client.ResultBoundedCompletionService$QueueingFuture.run(ResultBoundedCompletionService.java:64)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line">Caused by: org.apache.hadoop.hbase.ipc.RemoteWithExtrasException(org.apache.hadoop.hbase.exceptions.OutOfOrderScannerNextException): org.apache.hadoop.hbase.exceptions.OutOfOrderScannerNextException: Expected nextCallSeq: 1 But the nextCallSeq got from client: 0; request=scanner_id: 499 number_of_rows: 10000 close_scanner: false next_call_seq: 0</div><div class="line">    at org.apache.hadoop.hbase.regionserver.RSRpcServices.scan(RSRpcServices.java:2139)</div><div class="line">    at org.apache.hadoop.hbase.protobuf.generated.ClientProtos$ClientService$2.callBlockingMethod(ClientProtos.java:31443)</div><div class="line">    at org.apache.hadoop.hbase.ipc.RpcServer.call(RpcServer.java:2035)</div><div class="line">    at org.apache.hadoop.hbase.ipc.CallRunner.run(CallRunner.java:107)</div><div class="line">    at org.apache.hadoop.hbase.ipc.RpcExecutor.consumerLoop(RpcExecutor.java:130)</div><div class="line">    at org.apache.hadoop.hbase.ipc.RpcExecutor$1.run(RpcExecutor.java:107)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">    at org.apache.hadoop.hbase.ipc.RpcClientImpl.call(RpcClientImpl.java:1200)</div><div class="line">    at org.apache.hadoop.hbase.ipc.AbstractRpcClient.callBlockingMethod(AbstractRpcClient.java:216)</div><div class="line">    at org.apache.hadoop.hbase.ipc.AbstractRpcClient$BlockingRpcChannelImplementation.callBlockingMethod(AbstractRpcClient.java:300)</div><div class="line">    at org.apache.hadoop.hbase.protobuf.generated.ClientProtos$ClientService$BlockingStub.scan(ClientProtos.java:31889)</div><div class="line">    at org.apache.hadoop.hbase.client.ScannerCallable.call(ScannerCallable.java:205)</div><div class="line">    ... 9 more</div></pre></td></tr></table></figure>
+<p>出现次错误的原因：hbase.client.scanner.caching设置太大或者hbase.rpc.timeout设置太小</p>
+<blockquote>
+<p><a href="https://github.com/mattshma/bigdata/issues/7" target="_blank" rel="external">Failed after retry of OutOfOrderScannerNextException: was there a rpc timeout </a><br>Client的一个Scan可能需要多次向RS取数据，为了保证数据顺序，Client和RS各自维护一个nextCallSeq字段。RS每次返回一批数据，Client端都会将自已的nextCallSeq加1，供后续ScanRequest使用。RS端每次接受到ScanRequest也会将自己的nextCallSeq加1。如果客户端在获取数据超时，那么Client的nextCallSeq没有加1，后续RS收到ScanRequest发现nextCallSeq匹配不上，RS会抛出OutOfOrderScannerNextException。</p>
+</blockquote>
+<p>既然问题是由client端超时引起的，那相应的减少客户端cache（hbase.client.scanner.caching）大小或者加大rpc timeout时间（hbase.rpc.timeout）即可。</p>
+<h2 id="Container-killed-by-the-ApplicationMaster-Exit-code-is-143"><a href="#Container-killed-by-the-ApplicationMaster-Exit-code-is-143" class="headerlink" title="Container killed by the ApplicationMaster (Exit code is 143)"></a>Container killed by the ApplicationMaster (Exit code is 143)</h2><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.vmem-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">description</span>&gt;</span>Whether virtual memory limits will be enforced for containers<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.vmem-pmem-ratio<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>4<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">description</span>&gt;</span>Ratio between virtual memory to physical memory when setting memory limits for containers<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+<h1 id="参数调优："><a href="#参数调优：" class="headerlink" title="参数调优："></a>参数调优：</h1><h2 id="任务级别参数调优"><a href="#任务级别参数调优" class="headerlink" title="任务级别参数调优"></a>任务级别参数调优</h2><h2 id="hadoop任务级别参数调优分两个方面-Map-Task和Reduce-Task。"><a href="#hadoop任务级别参数调优分两个方面-Map-Task和Reduce-Task。" class="headerlink" title=" hadoop任务级别参数调优分两个方面: Map Task和Reduce Task。"></a> hadoop任务级别参数调优分两个方面: Map Task和Reduce Task。</h2><ul>
+<li>MapTask调优<br>map运行阶段分为:Read、Map、Collect、Spill、Merge五个阶段。</li>
+</ul>
+<p><strong>io.sort.mb</strong></p>
+<blockquote>
+<p>map 任务执行会产生中间数据,但这些中间结果并没有直接IO到磁盘上,而是先存储在缓存(buffer)中,并在缓存中进行一些预排序来优化整个map的性能,<strong>存储map中间数据的缓存默认大小为100M（CDH版的默认大小不同），由io.sort.mb 参数指定。</strong>这个大小可以根据需要调整。当map任务产生了非常大的中间数据时可以适当调大该参数,使缓存能容纳更多的map中间数据，而不至于大频率的IO磁盘,当系统性能的瓶颈在磁盘IO的速度上,可以适当的调大此参数来减少频繁的IO带来的性能障碍。</p>
+</blockquote>
+<p><strong>io.sort.factor</strong></p>
+<blockquote>
+<p>当map任务计算成功完成之后，如果map任务有输出，则会产生多个spill。<strong>接下来map必须将些spill进行合并,这个过程叫做merge, merge过程是并行处理spill的,每次并行多少个spill是由参数io.sort.factor指定的默认为10个。</strong>但是当spill的数量非常大的时候，merge一次并行运行的spill仍然为10个,这样仍然会频繁的IO处理,因此适当的调大每次并行处理的spill数有利于减少merge数因此可以影响map的性能。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>参数含义</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>io.sort.mb</td>
+<td>MapTask缓存区所占内存大小</td>
+<td>100MB</td>
+</tr>
+<tr>
+<td>io.sort.spill.percent</td>
+<td>混村去kvBuffer和kvOffsets内存使用达到该比例后会触发spill操作，将内存中数据写成一个文件</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>mapred.compress.map.output</td>
+<td>是否压缩MapTask中间输出结果</td>
+<td>False</td>
+</tr>
+<tr>
+<td>mapred.map.output.compression.codec</td>
+<td>设置压缩</td>
+<td>基于Zlib的DefaultCodec</td>
+</tr>
+<tr>
+<td>io.sort.factor</td>
+<td>文件合并时一次合并的文件数目（合并后，将合并后的文件放到磁盘上继续进行合并。注意：每次合并时，选择最小的io.sort.factor进行合并）</td>
+<td>10</td>
+</tr>
+<tr>
+<td>mapred.max.map.failures.percent<br>mapred.max.reduce.failures.percent</td>
+<td>作业最多允许失败的任务比例</td>
+<td>0</td>
+</tr>
+<tr>
+<td>mapred.map.max.attemps<br>mapred.reduce.max.attemps</td>
+<td>失败重试最多尝试次数</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>RedeceTask调优<br>reduce 运行阶段分为shuflle(copy) merge sort   reduce write五个阶段。</li>
+</ul>
+<p><strong>mapred.reduce.parallel.copies</strong></p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/09/25/hbase的一些配置项/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/08/24/hbase-和-phoenix-一些操作/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/0ce8a3cc7cd98d10bdaca2c8233fb80e7aec9080.jpg" alt="莫安's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        cheers0606520@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:cheers0606520@gmail.com" target="_blank" title="联系我">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        联系我
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/centos/">centos<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/demo/">demo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/ext/">ext<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/extjs/">extjs<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hadoop/">hadoop<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/hbase/">hbase<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/kafka/">kafka<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/storm/">storm<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/yarn/">yarn<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/平行世界/">平行世界<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/数据结构/">数据结构<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/算法/">算法<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timepill" title="神秘代码">
+                
+                    <i class="material-icons sidebar-material-icons">fingerprint</i>
+                
+                神秘代码
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">20</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+        <a href="http://weibo.com/171221720/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-weibo.png);">
+                <span class="visuallyhidden">Weibo</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/Cheers0606" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/zhang-jiu-jun-shan/activities" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-zhihu.png);">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+        <a href="http://space.bilibili.com/7587061/#!/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-bilibili.png);">
+                <span class="visuallyhidden">Bilibili</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;莫安
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>

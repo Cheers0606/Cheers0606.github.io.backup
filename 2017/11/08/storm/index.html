@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!-- 
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.0 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            storm介绍 | 
+        
+        莫安
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="莫安">
+    <meta name="description" content="心无属，意斑斓">
+    <meta name="keywords" content="null,storm,大数据,流式计算">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="莫安">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://www.moan.ac.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="storm介绍 | 莫安">
+    <meta property="og:description" content="心无属，意斑斓">
+    <meta property="og:article:tag" content="storm,大数据,流式计算"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/queue.js"></script>
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#storm基础"><span class="post-toc-number">1.</span> <span class="post-toc-text">storm基础</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Storm作业提交运行流程"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Storm作业提交运行流程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#storm分组"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">storm分组</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#各组件的一些说明"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">各组件的一些说明</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Topologies"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">Topologies</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stream"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">Stream</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据模型-Data-Model"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">数据模型(Data Model)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实例"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">实例</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Storm的并发机制"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Storm的并发机制</span></a></li></ol></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 10 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                storm介绍
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/0ce8a3cc7cd98d10bdaca2c8233fb80e7aec9080.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>莫安</strong>
+        <span>11月 08, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/storm-大数据-流式计算/">storm,大数据,流式计算</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=storm介绍&url=http://www.moan.ac.cn//2017/11/08/storm/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=storm介绍&url=http://www.moan.ac.cn//2017/11/08/storm/index.html&via=莫安" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://www.moan.ac.cn//2017/11/08/storm/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://www.moan.ac.cn//2017/11/08/storm/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="storm基础"><a href="#storm基础" class="headerlink" title="storm基础"></a>storm基础</h1><h2 id="Storm作业提交运行流程"><a href="#Storm作业提交运行流程" class="headerlink" title="Storm作业提交运行流程"></a>Storm作业提交运行流程</h2><ol>
+<li>用户使用Storm的API来编写Storm Topology。</li>
+<li>使用Storm的Client将Topology提交给Nimbus。<br>Nimbus收到之后，会将把这些Topology分配给足够的Supervisor。</li>
+<li>Supervisor收到这些Topoligy之后，Nimbus会指派一些Task给这些Supervisor。</li>
+<li>Nimvus会指示Supervisor为这些Task生成一些Worker。</li>
+<li>Worker来执行这些Task来完成计算任务。</li>
+</ol>
+<p><img src="组件图.png" alt="拓扑"></p>
+<h2 id="storm分组"><a href="#storm分组" class="headerlink" title="storm分组"></a>storm分组</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>分组名</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>Shuffle Grouping</td>
+<td>随机分组</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Fields Grouping</td>
+<td>按字段分组，保证同字段的数据必然分给同一个Bolt</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>All Grouping</td>
+<td>广播，所有下游Bolt都会收到全部数据</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Global Grouping</td>
+<td>全局分组，下游自由一个并发时使用</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>None Grouping</td>
+<td>预留，目前等价于Shuffle Grouping</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Direct Grouping</td>
+<td>直接知名下游的分组，比较底层的API</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Local or Shuffle Grouping</td>
+<td>功能类似随机分组，但会尽可能发送同一个Worker内的bolt，减少网络传输</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="各组件的一些说明"><a href="#各组件的一些说明" class="headerlink" title="各组件的一些说明"></a>各组件的一些说明</h2><h3 id="Topologies"><a href="#Topologies" class="headerlink" title="Topologies"></a>Topologies</h3><p>为了在storm上面做实时计算， 你要去建立一些topologies。一个topology就是一个计算节点所组成的图。<br>Topology里面的每个处理节点都包含处理逻辑， 而节点之间的连接则表示数据流动的方向。<br>运行一个Topology是很简单的。首先，把你所有的代码以及所依赖的jar打进一个jar包。然后运行类似下面的这个命令。<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">strom jar all-your-code.jar backtype.storm.MyTopology arg1 arg2</div></pre></td></tr></table></figure></p>
+<p>这个命令会运行主类: backtype.strom.MyTopology，参数是arg1, arg2。<br>这个类的main函数定义这个topology并且把它提交给Nimbus。storm jar负责连接到nimbus并且上传jar文件。</p>
+<h3 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h3><p>Stream是storm里面的关键抽象。<strong>一个stream是一个没有边界的tuple序列</strong>。</p>
+<p>storm提供一些原语来分布式地、可靠地把一个stream传输进一个新的stream。比如： 你可以把一个tweets流传输到热门话题的流。</p>
+<p>storm提供的最基本的处理stream的原语是spout和bolt。你可以实现Spout和Bolt对应的接口以处理你的应用的逻辑。</p>
+<p><strong>spout是流的源头</strong>。比如一个spout可能从Kestrel队列里面读取消息并且把这些消息发射成一个流。<br>又比如一个spout可以调用twitter的一个api并且把返回的tweets发射成一个流。<br>通常Spout会从外部数据源（队列、数据库等）读取数据，然后封装成Tuple形式，之后发送到Stream中。</p>
+<p><strong>Spout是一个主动的角色</strong>，在接口内部有个nextTuple函数，Storm框架会不停的调用该函数。</p>
+<p><strong>bolt可以接收任意多个输入stream</strong>， 作一些处理， 有些bolt可能还会发射一些新的stream。<br>一些复杂的流转换， 比如从一些tweet里面计算出热门话题， 需要多个步骤， 从而也就需要多个bolt。</p>
+<p>Bolt可以做任何事情: 运行函数，过滤tuple，做一些聚合，做一些合并以及访问数据库等等。<br>Bolt处理输入的Stream，并产生新的输出Stream。</p>
+<p>Bolt可以执行过滤、函数操作、Join、操作数据库等任何操作。</p>
+<p><strong>Bolt是一个被动的角色</strong>，其接口中有一个execute(Tuple input)方法，在接收到消息之后会调用此函数，用户可以在此方法中执行自己的处理逻辑。</p>
+<p>spout和bolt所组成一个网络会被打包成topology， topology是storm里面最高一级的抽象（类似 Job）， 你可以把topology提交给storm的集群来运行。</p>
+<p><strong>topology里面的每一个节点都是并行运行的</strong>。 在你的topology里面， 你可以指定每个节点的并行度， storm则会在集群里面分配那么多线程来同时计算。</p>
+<p><strong>一个topology会一直运行直到你显式停止它</strong>。storm自动重新分配一些运行失败的任务， 并且storm保证你不会有数据丢失， 即使在一些机器意外停机并且消息被丢掉的情况下。</p>
+<h3 id="数据模型-Data-Model"><a href="#数据模型-Data-Model" class="headerlink" title="数据模型(Data Model)"></a>数据模型(Data Model)</h3><p>storm使用tuple来作为它的数据模型。<strong>每个tuple是一堆值，每个值有一个名字，并且每个值可以是任何类型</strong>，</p>
+<p>在我的理解里面<strong>一个tuple可以看作一个没有方法的java对象（或者是一个表的字段）</strong>。</p>
+<p>总体来看，storm支持所有的基本类型、字符串以及字节数组作为tuple的值类型。你也可以使用你自己定义的类型来作为值类型， 只要你实现对应的序列化器(serializer)。</p>
+<p>一个Tuple代表数据流中的一个基本的处理单元，例如一条cookie日志，它可以包含多个Field，每个Field表示一个属性。</p>
+<p>Tuple本来应该是一个Key-Value的Map，由于各个组件间传递的tuple的字段名称已经事先定义好了，所以Tuple只需要按序填入各个Value，所以就是一个Value List。</p>
+<p><strong>一个没有边界的、源源不断的、连续的Tuple序列就组成了Stream</strong>。</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p><a href="https://github.com/quchunhui/StormWordCount" target="_blank" rel="external">WordCount的实例</a></p>
+<h2 id="Storm的并发机制"><a href="#Storm的并发机制" class="headerlink" title="Storm的并发机制"></a>Storm的并发机制</h2><p>Task数量：表示每个Spout或Bolt逻辑上有多少个并发。它影响输出结果。</p>
+<p>Worker数量：代表总共有几个JVM进程去执行我们的作业。</p>
+<p>Executor数量：表示每个Spout或Bolt启动几个线程来运行。</p>
+<p>Task数量 —–&gt;逻辑数量<br>Worker数量—-&gt;进程数<br>Executor数量–&gt;线程数</p>
+<p>Executor设置：<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//下面代码中的并行度即为Executor数量，不影响结果，但会影响性能。</span></div><div class="line">TopologyBuilder builder = <span class="keyword">new</span> TopologyBuilder();</div><div class="line"><span class="comment">// 设置Spout，这个Spout的名字叫做"Spout"，设置并行度为5</span></div><div class="line">builder.setSpout(<span class="string">"spout"</span>, <span class="keyword">new</span> WordCountSpout(), <span class="number">5</span>);</div><div class="line"><span class="comment">// 设置分词Bolt，并行度为8，它的数据来源是spout的</span></div><div class="line">builder.setBolt(<span class="string">"split"</span>, <span class="keyword">new</span> WordSplitBolt(), <span class="number">8</span>).shuffleGrouping(<span class="string">"spout"</span>);</div><div class="line"><span class="comment">// 设置计数Bolt,你并行度为12，它的数据来源是split的word字段</span></div><div class="line">builder.setBolt(<span class="string">"count"</span>, <span class="keyword">new</span> WordCountBolt(), <span class="number">12</span>).fieldsGrouping(<span class="string">"split"</span>, <span class="keyword">new</span> Fields(<span class="string">"word"</span>));</div></pre></td></tr></table></figure></p>
+<p><strong>Worker的数量</strong>在Config中设置，下图代码中的部分表示Worker数量。<br><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Config conf = <span class="keyword">new</span> Config();</div><div class="line">conf.setDebug(<span class="keyword">false</span>);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(args != <span class="keyword">null</span> &amp;&amp; args.length &gt; <span class="number">0</span>)&#123;</div><div class="line">    System.out.print(<span class="string">"[--------------]StormSubmitter Start\n"</span>);</div><div class="line">    <span class="comment">//这里配置worker数量</span></div><div class="line">    conf.setNumWorkers(<span class="number">3</span>);</div><div class="line">    StormSubmitter.submitTopology(args[<span class="number">0</span>], conf, builder.createTopology());</div><div class="line">    System.out.print(<span class="string">"[--------------]StormSubmitter End\n"</span>);</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    System.out.print(<span class="string">"[--------------]LocalCluster Start\n"</span>);</div><div class="line">    LocalCluster cluster = <span class="keyword">new</span> LocalCluster();</div><div class="line">    cluster.submitTopology(<span class="string">"WordCount"</span>, conf, builder.createTopology());</div><div class="line">    System.out.print(<span class="string">"[--------------]LocalCluster End\n"</span>);</div><div class="line">    Thread.sleep(<span class="number">60000</span>);</div><div class="line">    cluster.shutdown();</div><div class="line">    System.out.print(<span class="string">"[--------------]Cluster Shutdown\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>本地模式中，Worker数不生效，只会启动一个JVM进行来执行作业。</strong></p>
+<p><strong>只有在集群模式设置Worker才有效。而且集群模式的时候一定要设置才能体现集群的价值。</strong></p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/10/08/readme/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/0ce8a3cc7cd98d10bdaca2c8233fb80e7aec9080.jpg" alt="莫安's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        cheers0606520@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:cheers0606520@gmail.com" target="_blank" title="联系我">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        联系我
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/centos/">centos<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/demo/">demo<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/ext/">ext<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/extjs/">extjs<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/hadoop/">hadoop<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/hbase/">hbase<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/kafka/">kafka<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/storm/">storm<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/yarn/">yarn<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/平行世界/">平行世界<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/数据结构/">数据结构<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/算法/">算法<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timepill" title="神秘代码">
+                
+                    <i class="material-icons sidebar-material-icons">fingerprint</i>
+                
+                神秘代码
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">20</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+        <a href="http://weibo.com/171221720/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-weibo.png);">
+                <span class="visuallyhidden">Weibo</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/Cheers0606" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/zhang-jiu-jun-shan/activities" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-zhihu.png);">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+        <a href="http://space.bilibili.com/7587061/#!/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-bilibili.png);">
+                <span class="visuallyhidden">Bilibili</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;莫安
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>
